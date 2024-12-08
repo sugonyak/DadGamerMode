@@ -5,7 +5,7 @@ using EFT;
 using EFT.HealthSystem;
 using UnityEngine;
 
-using AbstractIEffect = EFT.HealthSystem.ActiveHealthController.GClass2429;
+using AbstractIEffect = EFT.HealthSystem.ActiveHealthController.GClass2746;
 
 namespace dvize.DadGamerMode.Features
 {
@@ -16,7 +16,7 @@ namespace dvize.DadGamerMode.Features
         private static float timeSinceLastHit = 0f;
         private static bool isRegenerating = false;
         private static float newHealRate;
-        private static DamageInfo tmpDmg;
+        private static DamageInfoStruct tmpDmg;
         private static HealthValue currentHealth;
         private static int frameCount = 0;
 
@@ -51,7 +51,7 @@ EBodyPart.LeftLeg, EBodyPart.LeftArm, EBodyPart.RightArm };
             isRegenerating = false;
             timeSinceLastHit = 0f;
             newHealRate = 0f;
-            tmpDmg = new DamageInfo();
+            tmpDmg = new DamageInfoStruct();
             currentHealth = null;
             frameCount = 0;
 
@@ -146,7 +146,7 @@ EBodyPart.LeftLeg, EBodyPart.LeftArm, EBodyPart.RightArm };
             }
         }
 
-        private void Player_BeingHitAction(DamageInfo arg1, EBodyPart arg2, float arg3)
+        private void Player_BeingHitAction(DamageInfoStruct arg1, EBodyPart arg2, float arg3)
         {
             //Logger.LogDebug("DadGamerMode: Player_BeingHitAction called");
             timeSinceLastHit = 0f;
