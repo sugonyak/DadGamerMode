@@ -74,9 +74,10 @@ EBodyPart.LeftLeg, EBodyPart.LeftArm, EBodyPart.RightArm };
             if (dadGamerPlugin.CODModeToggle.Value && !dadGamerPlugin.CODBleedingDamageToggle.Value)
             {
                 //if (Singleton<ActiveHealthController.Class1917>.Instance.method_0(effect as AbstractIEffect))
-                if (!(effect is GInterface252) && !(effect is GInterface253))
+                if (!(effect is GInterface296) && !(effect is GInterface297))
                 {
-                    //GInterface257is Light Bleeding
+                    //@sugonyak: outdated info below, too lazy to update it, sorry:
+                    //GInterface257 is Light Bleeding
                     //GInterface258 is Heavy Bleeding
                     //GInterface260 is fracture
                     //GInterface274 is pain  +15?
