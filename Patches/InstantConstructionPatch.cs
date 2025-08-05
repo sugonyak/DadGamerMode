@@ -14,11 +14,11 @@ namespace dvize.DadGamerMode.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            return AccessTools.Method(typeof(AreaData), "method_0", new[] { typeof(int) });
+            return AccessTools.Method(typeof(AreaData), "method_0", new[] { typeof(int), typeof(bool) });
         }
 
         [PatchPrefix]
-        private static bool Prefix(ref Task __result, AreaData __instance, int timestamp)
+        private static bool Prefix(ref Task __result, AreaData __instance, int timestamp, bool alreadyUnderConstructing)
         {
             if (dadGamerPlugin.InstantConstructionEnabled.Value)
             {
