@@ -5,7 +5,7 @@ using EFT;
 using EFT.HealthSystem;
 using UnityEngine;
 
-using AbstractIEffect = EFT.HealthSystem.ActiveHealthController.GClass2813;
+using AbstractIEffect = EFT.HealthSystem.ActiveHealthController.GClass3008;
 
 namespace dvize.DadGamerMode.Features
 {
@@ -13,7 +13,7 @@ namespace dvize.DadGamerMode.Features
     {
         private static Player player;
         private static ActiveHealthController healthController;
-        private static ActiveHealthController.Class2112 someClassWithEffectsCheck;
+        private static ActiveHealthController.Class2225 someClassWithEffectsCheck;
         private static float timeSinceLastHit = 0f;
         private static bool isRegenerating = false;
         private static float newHealRate;
@@ -37,19 +37,19 @@ EBodyPart.LeftLeg, EBodyPart.LeftArm, EBodyPart.RightArm };
         }
         internal static void Enable()
         {
-            if (Singleton<GameWorld>.Instantiated)
-            {
-                var gameWorld = Singleton<GameWorld>.Instance;
-                gameWorld.GetOrAddComponent<CODModeComponent>();
+            if (!Singleton<GameWorld>.Instantiated) 
+                return;
+            
+            var gameWorld = Singleton<GameWorld>.Instance;
+            gameWorld.GetOrAddComponent<CODModeComponent>();
 
-                Logger.LogDebug("DadGamerMode: CODModeComponent enabled");
-            }
+            Logger.LogDebug("DadGamerMode: CODModeComponent enabled");
         }
         private void Start()
         {
             player = Singleton<GameWorld>.Instance.MainPlayer;
             healthController = player.ActiveHealthController;
-            someClassWithEffectsCheck = new ActiveHealthController.Class2112();
+            someClassWithEffectsCheck = new ActiveHealthController.Class2225();
             isRegenerating = false;
             timeSinceLastHit = 0f;
             newHealRate = 0f;
@@ -73,24 +73,15 @@ EBodyPart.LeftLeg, EBodyPart.LeftArm, EBodyPart.RightArm };
 #endif
 
             //grabbed this from remove negative effects method
-            if (dadGamerPlugin.CODModeToggle.Value && !dadGamerPlugin.CODBleedingDamageToggle.Value)
-            {
-                if (someClassWithEffectsCheck.method_1(effect as AbstractIEffect))
-                //if (!(effect is GInterface308) && !(effect is GInterface309))
-                {
-                    //@sugonyak: outdated info below, too lazy to update it, sorry:
-                    //GInterface257 is Light Bleeding
-                    //GInterface258 is Heavy Bleeding
-                    //GInterface260 is fracture
-                    //GInterface274 is pain  +15?
-                    //GInterface278 is tremor
+            if (!dadGamerPlugin.CODModeToggle.Value || 
+                dadGamerPlugin.CODBleedingDamageToggle.Value ||
+                !someClassWithEffectsCheck.method_1(effect as AbstractIEffect)) 
+                return;
 
-                    healthController.RemoveEffectFromList(effect as AbstractIEffect);
+            healthController.RemoveEffectFromList(effect as AbstractIEffect);
 #if DEBUG
-                    Logger.LogDebug("Effect is a Fracture, Bleeding, or Pain and has been removed");
+            Logger.LogDebug("Effect is a Fracture, Bleeding, or Pain and has been removed");
 #endif
-                }
-            }
         }
 
         private void Update()

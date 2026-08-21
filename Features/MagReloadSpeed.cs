@@ -17,11 +17,11 @@ namespace dvize.DadGamerMode.Features
             dadGamerPlugin.UnloadSpeed.SettingChanged += OnUnloadSpeedChanged;
             dadGamerPlugin.ToggleReloadUnloadSpeed.SettingChanged += OnToggleReloadUnloadSpeedChanged;
 
-            if (dadGamerPlugin.ToggleReloadUnloadSpeed.Value)
-            {
-                Singleton<BackendConfigSettingsClass>.Instance.BaseLoadTime = dadGamerPlugin.ReloadSpeed.Value;
-                Singleton<BackendConfigSettingsClass>.Instance.BaseUnloadTime = dadGamerPlugin.UnloadSpeed.Value;
-            } 
+            if (!dadGamerPlugin.ToggleReloadUnloadSpeed.Value) 
+                return;
+            
+            Singleton<BackendConfigSettingsClass>.Instance.BaseLoadTime = dadGamerPlugin.ReloadSpeed.Value;
+            Singleton<BackendConfigSettingsClass>.Instance.BaseUnloadTime = dadGamerPlugin.UnloadSpeed.Value;
         }
         private void OnReloadSpeedChanged(object sender, EventArgs e)
         {

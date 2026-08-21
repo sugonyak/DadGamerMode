@@ -27,7 +27,7 @@ namespace dvize.DadGamerMode.Patches
         {
 
             //original functionality
-            __result = slots.Sum(new Func<Slot, float>(InventoryEquipment.Class2294.class2294_0.method_1));
+            __result = slots.Sum(InventoryEquipment.Class2408.class2408_0.method_1);
 
             // Get the total weight reduction setting
             float totalWeightReduction = dadGamerPlugin.totalWeightReductionPercentage.Value;

@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Reflection;
 using dvize.GodModeTest;
@@ -20,30 +20,31 @@ namespace dvize.DadGamerMode.Patches
         [PatchPrefix]
         private static bool Prefix(GClass2193 __instance, float deltaTime)
         {
-            if (dadGamerPlugin.InstantProductionEnabled.Value)
-            {
-                if (__instance == null || __instance.ProducingItems == null)
-                {
-                    return false;
-                }
-
-                // Filter itemsToComplete by removing bitcoin farm
-                List<KeyValuePair<string, GClass2200>> itemsToComplete = new List<KeyValuePair<string, GClass2200>>(__instance.ProducingItems);
-                itemsToComplete.RemoveAll(x => x.Key == "5d5589c1f934db045e6c5492" || x.Key == "5d5c205bd582a50d042a3c0e"); //bitcoin and fuel?
-
-                foreach (var kvp in itemsToComplete)
-                {
-                    if (__instance.Schemes != null && __instance.Schemes.TryGetValue(kvp.Key, out ProductionBuildAbstractClass scheme))
-                    {
-                        __instance.CompleteProduction(kvp.Value, scheme);
-                    }
-                }
-
-                // Allow normal update processing for Bitcoin items
+            if (!dadGamerPlugin.InstantProductionEnabled.Value) 
                 return true;
+            
+            if (__instance is null || 
+                __instance.ProducingItems is null)
+            {
+                return false;
             }
 
+            // Filter itemsToComplete by removing bitcoin farm
+            List<KeyValuePair<string, GClass2200>> itemsToComplete = new List<KeyValuePair<string, GClass2200>>(__instance.ProducingItems);
+            itemsToComplete.RemoveAll(x => x.Key is "5d5589c1f934db045e6c5492" or "5d5c205bd582a50d042a3c0e"); //bitcoin and fuel?
+
+            foreach (var kvp in itemsToComplete)
+            {
+                if (__instance.Schemes != null && 
+                    __instance.Schemes.TryGetValue(kvp.Key, out ProductionBuildAbstractClass scheme))
+                {
+                    __instance.CompleteProduction(kvp.Value, scheme);
+                }
+            }
+
+            // Allow normal update processing for Bitcoin items
             return true;
+
         }
     }
 
@@ -114,4 +115,4 @@ namespace dvize.DadGamerMode.Patches
             }
         }
     }
-}
+}*/

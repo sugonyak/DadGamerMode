@@ -47,7 +47,7 @@ namespace dvize.DadGamerMode.Patches
 
             Stage currentStage = __instance.CurrentStage;
             currentStage.Waiting = false;
-            __instance.Status = (__instance.CurrentLevel > 0) ? EAreaStatus.ReadyToInstallUpgrade : EAreaStatus.ReadyToInstallConstruct;
+            __instance.Status = __instance.CurrentLevel > 0 ? EAreaStatus.ReadyToInstallUpgrade : EAreaStatus.ReadyToInstallConstruct;
             currentStage.ActionGoing = false;
             currentStage.ActionReady = true;
         }
