@@ -10,7 +10,7 @@ using VersionChecker;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("dvize.DadGamerMode")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyCopyright("Copyright ï¿½  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -34,4 +34,3 @@ using VersionChecker;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.11.0.0")]
 [assembly: AssemblyFileVersion("1.11.0.0")]
-[assembly: TarkovVersion(35392)]
