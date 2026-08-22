@@ -9,15 +9,15 @@ using EFT;
 
 namespace dvize.GodModeTest
 {
-    [BepInPlugin("com.dvize.DadGamerMode", "dvize.DadGamerMode", "1.9.3")]
+    [BepInPlugin("com.dvize.DadGamerMode", "dvize.DadGamerMode", "1.10.2")]
     //[BepInDependency("com.SPT.core", "3.8.0")]
     public class dadGamerPlugin : BaseUnityPlugin
     {
-        public static ConfigEntry<Boolean> Godmode
+        public static ConfigEntry<bool> Godmode
         {
             get; set;
         }
-        public static ConfigEntry<Boolean> Keep1Health
+        public static ConfigEntry<bool> Keep1Health
         {
             get; set;
         }
@@ -26,8 +26,8 @@ namespace dvize.GodModeTest
             get; set;
         }
         //list of values for Keep1HealthSelection
-        public string[] Keep1HealthSelectionList = new string[] { "All", "Head And Thorax" };
-        public static ConfigEntry<Boolean> NoFallingDamage
+        public string[] Keep1HealthSelectionList = ["All", "Head And Thorax"];
+        public static ConfigEntry<bool> NoFallingDamage
         {
             get; set;
         }
@@ -39,30 +39,30 @@ namespace dvize.GodModeTest
         {
             get; set;
         }
-        public static ConfigEntry<Boolean> IgnoreHeadShotDamage
+        public static ConfigEntry<bool> IgnoreHeadShotDamage
         {
             get; set;
         }
-        public static ConfigEntry<Boolean> PercentageHeadShotDamageOnly
+        public static ConfigEntry<bool> PercentageHeadShotDamageOnly
         {
             get; set;
         }
-        public static ConfigEntry<Boolean> MaxStaminaToggle
-        {
-            get; set;
-        }
-
-        public static ConfigEntry<Boolean> MaxHydrationToggle
+        public static ConfigEntry<bool> MaxStaminaToggle
         {
             get; set;
         }
 
-        public static ConfigEntry<Boolean> MaxEnergyToggle
+        public static ConfigEntry<bool> MaxHydrationToggle
         {
             get; set;
         }
 
-        public static ConfigEntry<Boolean> CODModeToggle
+        public static ConfigEntry<bool> MaxEnergyToggle
+        {
+            get; set;
+        }
+
+        public static ConfigEntry<bool> CODModeToggle
         {
             get; set;
         }
@@ -74,7 +74,7 @@ namespace dvize.GodModeTest
         {
             get; set;
         }
-        public static ConfigEntry<Boolean> CODBleedingDamageToggle
+        public static ConfigEntry<bool> CODBleedingDamageToggle
         {
             get; set;
         }
@@ -196,7 +196,7 @@ namespace dvize.GodModeTest
             new DadGamerMode.Patches.OnWeightUpdatedPatch().Enable();
 
             //instant production patches
-            new DadGamerMode.Patches.InstantUpdatePatch().Enable();
+            //new DadGamerMode.Patches.InstantUpdatePatch().Enable();
 
             //instant hideout upgrade patches
             new DadGamerMode.Patches.InstantConstructionPatch().Enable();

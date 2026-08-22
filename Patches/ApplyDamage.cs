@@ -4,13 +4,14 @@ using SPT.Reflection.Patching;
 using dvize.GodModeTest;
 using EFT.HealthSystem;
 using HarmonyLib;
+using EFT;
 
 namespace dvize.DadGamerMode.Patches
 {
     internal class ApplyDamage : ModulePatch
     {
         private static ActiveHealthController healthController;
-        private static EFT.HealthSystem.ValueStruct currentHealth;
+        private static ValueStruct currentHealth;
         private static bool potentialHealthLowerThanMinimum;
         protected override MethodBase GetTargetMethod()
         {
@@ -18,14 +19,14 @@ namespace dvize.DadGamerMode.Patches
         }
 
         [PatchPrefix]
-        private static bool Prefix(ActiveHealthController __instance, ref float damage, EBodyPart bodyPart, DamageInfo damageInfo)
+        private static bool Prefix(ActiveHealthController __instance, ref float damage, ref Player ___Player, EBodyPart bodyPart, DamageInfoStruct damageInfo)
         {
             try
             {
-                if (__instance.Player != null &&
-                __instance.Player.IsYourPlayer)
+                if (___Player != null &&
+                    ___Player.IsYourPlayer)
                 {
-                    healthController = __instance.Player.ActiveHealthController;
+                    healthController = ___Player.ActiveHealthController;
                     currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
 
                     //just set damage to 0 and not run apply damage for GodMode
@@ -36,7 +37,8 @@ namespace dvize.DadGamerMode.Patches
                     }
 
                     //if headshot damage ignore it
-                    if (bodyPart == EBodyPart.Head && dadGamerPlugin.IgnoreHeadShotDamage.Value)
+                    if (bodyPart == EBodyPart.Head && 
+                        dadGamerPlugin.IgnoreHeadShotDamage.Value)
                     {
                         damage = 0f;
                         return false;
@@ -46,14 +48,15 @@ namespace dvize.DadGamerMode.Patches
                     if (dadGamerPlugin.CustomDamageModeVal.Value != 100)
                     {
                         //set damage early so we can use it in the keep1health check
-                        damage = damage * ((float)dadGamerPlugin.CustomDamageModeVal.Value / 100);
+                        damage *= ((float)dadGamerPlugin.CustomDamageModeVal.Value / 100);
                     }
 
                     //if there's a custom headshot damage value use that
-                    if (bodyPart == EBodyPart.Head && dadGamerPlugin.PercentageHeadShotDamageOnly.Value)
+                    if (bodyPart == EBodyPart.Head && 
+                        dadGamerPlugin.PercentageHeadShotDamageOnly.Value)
                     {
                         //set damage early so we can use it in the keep1health check
-                        damage = damage * ((float)dadGamerPlugin.CustomHeadDamageModeVal.Value / 100);
+                        damage *= ((float)dadGamerPlugin.CustomHeadDamageModeVal.Value / 100);
                     }
 
                     //if keep 1 health enabled, ensure health does not drop below 1
@@ -64,14 +67,9 @@ namespace dvize.DadGamerMode.Patches
                         // Check if this damage would bring health below 3f
                         if (potentialHealthLowerThanMinimum)
                         {
-                            if ((dadGamerPlugin.Keep1HealthSelection.Value == "Head And Thorax" && (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)))
-                            {
-                                damage = 0f;
-                                currentHealth.Current = 3f;
-                                return false;
-                            }
-
-                            else if (dadGamerPlugin.Keep1HealthSelection.Value == "All")
+                            if ((dadGamerPlugin.Keep1HealthSelection.Value == "Head And Thorax" && 
+                                 (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)) || 
+                                dadGamerPlugin.Keep1HealthSelection.Value == "All")
                             {
                                 damage = 0f;
                                 currentHealth.Current = 3f;
@@ -92,9 +90,9 @@ namespace dvize.DadGamerMode.Patches
                 else
                 {
                     //multiply damage by multiplier if a type of player
-                    if (__instance.Player != null)
+                    if (___Player != null)
                     {
-                        damage = damage * dadGamerPlugin.enemyDamageMultiplier.Value;
+                        damage *= dadGamerPlugin.enemyDamageMultiplier.Value;
                     }
                 }
             }
